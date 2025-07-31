@@ -1,0 +1,149 @@
+
+
+
+/* MAIN BODY*/
+
+.main-body{
+    margin-top: 5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    flex: 1;
+    overflow-y: auto;
+}
+
+
+.table-headers-buttons-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-categories-wrap{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+@media (max-width: 600px) {
+    .filter-categories-wrap{
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
+@media (max-width: 470px){
+
+    .table-headers-buttons-wrap{
+        flex-direction: column;
+        align-items: start;
+        gap: 1em;
+    }
+
+}
+
+@media (max-width: 330px){
+    .filter{
+        flex-direction: column;
+        align-items: start;
+        gap: 10em;
+    }
+    .filter p{
+        width: 100%;
+    }
+}
+
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.filter p{
+    margin: 0;
+}
+
+.searchbar{
+    width: 100%;
+    margin-top: 1em;
+}
+
+
+/*table style*/
+.table-wrap{
+    margin-top: 1em;
+    white-space: nowrap;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+/*table style emd*/
+
+
+/*----------Modal Related style------------*/
+
+/*Add modal*/
+.image-preview-container{
+    margin-top: 1em;
+    width:100%;
+    min-height: 200px;
+    border: 1px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--quinary-color);
+}
+
+.image_preview_img{
+    display: none;
+    width: 50%;
+}
+/*Update modal*/
+.update-image-preview-container{
+    margin-top: 1em;
+    width:100%;
+    min-height: 200px;
+    border: 1px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--quinary-color);
+}
+
+.update-image_preview_img{
+    display: none;
+    width: 50%;
+}
+
+/*View modal*/
+.view-image-preview-container{
+    margin-top: 1em;
+    width:100%;
+    min-height: 200px;
+    border: 1px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--quinary-color);
+}
+
+.view-image_preview_img{
+    display: none;
+    width: 50%;
+}
+
+
+/*------------Modal Related style------------*/
+
+/* MAIN BODY ENDD*/
