@@ -17,6 +17,27 @@ async function loadData(){
     showProducts(data);
 }
 
+function showBootstrapAlert(message, type = 'success') {
+  const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+  
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type} alert-dismissible fade show`;
+  alert.setAttribute('role', 'alert');
+  alert.innerHTML = `
+    <span>${message}</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  `;
+
+  alertPlaceholder.appendChild(alert);
+
+  // Optional auto-dismiss
+  setTimeout(() => {
+    alert.classList.remove('show');
+    alert.classList.add('fade');
+    alert.addEventListener('transitionend', () => alert.remove());
+  }, 4000);
+}
+
 async function categoryFunction(){
 
     const category_btn = document.querySelectorAll(".categories-btn");
@@ -139,6 +160,15 @@ function enterCashModal(){
 
     document.getElementById("save_item_btn").addEventListener('click', async function() {
 
+        const btn = document.getElementById('save_item_btn');
+        const spinner = btn.querySelector('.spinner-area');
+        const label = btn.querySelector('.label-area');
+
+        // Show loading state
+        spinner.style.display = 'inline-flex';
+        label.style.display = 'none';
+        btn.disabled = true;
+
         const amountPaid = document.getElementById("enter_cash_form").value;
         const warning = document.getElementById("warning-for-cash");
         const showChange = document.getElementById("show_change")
@@ -172,10 +202,15 @@ function enterCashModal(){
             }); 
 
             const result = await response.json();
-            console.log(result);
 
-            if(result.success){
-                alert("Sale added");
+            setTimeout( () => {
+                //For spinner
+                spinner.style.display = 'none';
+                label.style.display = 'inline';
+                btn.disabled = false;
+
+                if(result.success){
+                showBootstrapAlert(result.message, 'success');
                 selectedItem = [];
                 textarea_receipt.value = "";
                 textarea_total.value = "";
@@ -190,9 +225,11 @@ function enterCashModal(){
 
                 return;
             }else{
-                alert("error adding")
+                showBootstrapAlert(result.message || 'An error occurred.', 'danger');
             }
 
+            }, 1000)
+            
         }
         catch(error){
             console.log(`Error in try catch ${error}`);

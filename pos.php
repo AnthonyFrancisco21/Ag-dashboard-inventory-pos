@@ -25,6 +25,9 @@ if(!isset($_SESSION['admin_id'])){
 
 <body data-admin-id="<?= $_SESSION['admin_id']; ?>">
 
+    <!-- Alerts -->
+    <div id="liveAlertPlaceholder"></div>>
+
     <div class="container-fluid d-flex m-0 p-0 min-vh-100">
 
         <aside class="sidebar-section shadow">
@@ -191,7 +194,14 @@ if(!isset($_SESSION['admin_id'])){
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="save_item_btn">Save</button>
+                                <button type="button" class="btn btn-primary" id="save_item_btn">
+                                    <span class="spinner-area" style="display: none;">
+                                        <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+                                        <span role="status">Loading...</span>
+                                    </span>
+                                    <span class="label-area">Save</span>
+                                    
+                                </button>
                             </div>
                             </div>
                         </div>
@@ -226,7 +236,6 @@ if(!isset($_SESSION['admin_id'])){
                             </div>
                         </div>
                         </div>
-
 
                     </section>
 

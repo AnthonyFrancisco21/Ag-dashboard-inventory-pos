@@ -39,7 +39,7 @@
 
             echo json_encode([
             "success" => true,
-            "message" => "Sales data received and processed."
+            "message" => "✔️ Sales data received and processed."
             ]);
             
 
@@ -53,7 +53,7 @@
 
             echo json_encode([
                 "success" => false,
-                "message" => "Failed to insert sale: " . $stmt2->error
+                "message" => "❌ Failed to insert sale: " . $stmt2->error
             ]);
             http_response_code(500);
             exit();
