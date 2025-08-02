@@ -35,6 +35,7 @@ html, body{
 }
 
 
+
 /*Alerts css*/
 #liveAlertPlaceholder{
     position: fixed;
@@ -42,7 +43,7 @@ html, body{
     left: 50%;
     transform: translateX(-50%);
     top: 2rem;
-    z-index: 1055;
+    z-index: 2000;
 }
 #liveAlertPlaceholder:empty {
   display: none;

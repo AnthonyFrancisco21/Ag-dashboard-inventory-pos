@@ -147,6 +147,16 @@ function quantityModal(){
 
 }// quantityModal() end
 
+//proceed btn
+document.getElementById('proceed_btn').addEventListener('click', function(){
+    if(selectedItem.length === 0){
+        return;
+    }
+    const enterAmountModal = new bootstrap.Modal(document.getElementById('enter_amount_modal'));
+    enterAmountModal.show();
+});
+
+
 function enterCashModal(){
 
     const cash_form = document.getElementById("enter_cash_form");
@@ -164,14 +174,8 @@ function enterCashModal(){
         const spinner = btn.querySelector('.spinner-area');
         const label = btn.querySelector('.label-area');
 
-        // Show loading state
-        spinner.style.display = 'inline-flex';
-        label.style.display = 'none';
-        btn.disabled = true;
-
         const amountPaid = document.getElementById("enter_cash_form").value;
         const warning = document.getElementById("warning-for-cash");
-        const showChange = document.getElementById("show_change")
         
         let totalChange = amountPaid - total;
         
@@ -182,8 +186,11 @@ function enterCashModal(){
             warning.style.display = "none";
         }
 
-        showChange.textContent = `₱${totalChange}`;
-        
+        // Show loading state
+        spinner.style.display = 'inline-flex';
+        label.style.display = 'none';
+        btn.disabled = true;
+
         const wholeSale = {
             selectedItem,
             amountPaid,
@@ -204,13 +211,9 @@ function enterCashModal(){
             const result = await response.json();
 
             setTimeout( () => {
-                //For spinner
-                spinner.style.display = 'none';
-                label.style.display = 'inline';
-                btn.disabled = false;
-
+                
                 if(result.success){
-                showBootstrapAlert(result.message, 'success');
+                
                 selectedItem = [];
                 textarea_receipt.value = "";
                 textarea_total.value = "";
@@ -223,12 +226,23 @@ function enterCashModal(){
                 const modalReceipt = new bootstrap.Modal(document.getElementById('modal_receipt'));
                 modalReceipt.show();
 
+                showBootstrapAlert(result.message, 'success');
+                //For spinner
+                spinner.style.display = 'none';
+                label.style.display = 'inline';
+                btn.disabled = false;
+
                 return;
-            }else{
-                showBootstrapAlert(result.message || 'An error occurred.', 'danger');
-            }
+                }else{
+                    showBootstrapAlert('❌ An error occurred. Please try again', 'danger');
+                    //For spinner
+                    spinner.style.display = 'none';
+                    label.style.display = 'inline';
+                    btn.disabled = false;
+                }
 
             }, 1000)
+
             
         }
         catch(error){
@@ -238,6 +252,8 @@ function enterCashModal(){
 
 }//enterCashModal() end
 
+const modalReceipt = new bootstrap.Modal(document.getElementById('modal_receipt'));
+modalReceipt.show();
 
 
 //remove an item from the receipt and list of item sales
@@ -255,17 +271,6 @@ document.getElementById('remove_btn').addEventListener('click', function () {
     textarea_total.value = `₱${total.toFixed(2)}`;
 
 }); 
-
-
-
-//proceed btn
-document.getElementById('proceed_btn').addEventListener('click', function(){
-    if(selectedItem.length === 0){
-        return;
-    }
-    const enterAmountModal = new bootstrap.Modal(document.getElementById('enter_amount_modal'));
-    enterAmountModal.show();
-});
 
 
 async function showProducts(data) {

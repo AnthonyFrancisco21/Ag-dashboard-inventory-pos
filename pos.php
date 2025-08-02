@@ -26,7 +26,7 @@ if(!isset($_SESSION['admin_id'])){
 <body data-admin-id="<?= $_SESSION['admin_id']; ?>">
 
     <!-- Alerts -->
-    <div id="liveAlertPlaceholder"></div>>
+    <div id="liveAlertPlaceholder"></div>
 
     <div class="container-fluid d-flex m-0 p-0 min-vh-100">
 
@@ -109,28 +109,27 @@ if(!isset($_SESSION['admin_id'])){
 
                     <section class="section-categories">
                     
+                        <div class="section-categories-wrap">
 
-                    <div class="section-categories-wrap">
-
-                        <h2>Categories</h2>
-                        <div class="categories-wrap-btn">
-                            <button class="categories-btn" data-category="" >All Products</button>
-                            <button class="categories-btn" data-category="feeds" >Feeds</button>
-                            <button class="categories-btn" data-category="Supplements" >Supplements</button>
-                            <button class="categories-btn" data-category="Equipment">Farm & Game Equipment</button>
-                            <button class="categories-btn" data-category="Accessories" >Pet Nutrition & Accessories</button>
-                            <button class="categories-btn" data-category="others" >Others</button>
+                            <h2>Categories</h2>
+                            <div class="categories-wrap-btn">
+                                <button class="categories-btn" data-category="" >All Products</button>
+                                <button class="categories-btn" data-category="feeds" >Feeds</button>
+                                <button class="categories-btn" data-category="Supplements" >Supplements</button>
+                                <button class="categories-btn" data-category="Equipment">Farm & Game Equipment</button>
+                                <button class="categories-btn" data-category="Accessories" >Pet Nutrition & Accessories</button>
+                                <button class="categories-btn" data-category="others" >Others</button>
+                            </div>
+                            
                         </div>
-                        
-                    </div>
 
-                    <div class="search-item-div">
-                        <div class="search-item-div-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 -960 960 960" width="27px" fill="#000000"><path d="M765-144 526-383q-30 22-65.79 34.5-35.79 12.5-76.18 12.5Q284-336 214-406t-70-170q0-100 70-170t170-70q100 0 170 70t70 170.03q0 40.39-12.5 76.18Q599-464 577-434l239 239-51 51ZM384-408q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z"/></svg>
-                            <input type="text" id="search-item" placeholder="Search products...">
-                            <button>Search</button>
+                        <div class="search-item-div">
+                            <div class="search-item-div-wrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 -960 960 960" width="27px" fill="#000000"><path d="M765-144 526-383q-30 22-65.79 34.5-35.79 12.5-76.18 12.5Q284-336 214-406t-70-170q0-100 70-170t170-70q100 0 170 70t70 170.03q0 40.39-12.5 76.18Q599-464 577-434l239 239-51 51ZM384-408q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z"/></svg>
+                                <input type="text" id="search-item" placeholder="Search products...">
+                                <button>Search</button>
+                            </div>
                         </div>
-                    </div>
                     
                     </section>
 
@@ -144,7 +143,7 @@ if(!isset($_SESSION['admin_id'])){
                         </div>
                        
                         <!-- Modal for entering a quantity -->
-                        <div class="modal fade" id="added_quantity" tabindex="-1" aria-labelledby="quantity_modal_title" aria-hidden="true">
+                        <div class="modal fade" id="added_quantity" tabindex="-1" aria-labelledby="quantity_modal_title" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -171,7 +170,7 @@ if(!isset($_SESSION['admin_id'])){
                         </div>
 
                         <!-- Modal for Enter Cash Amount -->
-                        <div class="modal fade" id="enter_amount_modal" tabindex="-1" aria-labelledby="enter_amount" aria-hidden="true">
+                        <div class="modal fade" id="enter_amount_modal"  tabindex="-1" aria-labelledby="enter_amount" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -195,9 +194,9 @@ if(!isset($_SESSION['admin_id'])){
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary" id="save_item_btn">
-                                    <span class="spinner-area" style="display: none;">
-                                        <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
-                                        <span role="status">Loading...</span>
+                                    <span class="spinner-area" style="display: none; justify-content: center; align-items: center; margin:0; padding: 0;">
+                                        <span class="spinner-border spinner-border-sm me-1"  aria-hidden="true"></span>
+                                        <span role="status">Saving...</span>
                                     </span>
                                     <span class="label-area">Save</span>
                                     
@@ -208,24 +207,60 @@ if(!isset($_SESSION['admin_id'])){
                         </div>
 
 
-                        <!-- Modal for change and receipt -->
-                        <div class="modal fade" id="modal_receipt" tabindex="-1" aria-labelledby="change_receipt" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
+                        <!-- Modal for INVOICE -->
+                        <div class="modal fade" id="modal_receipt" tabindex="-1" aria-labelledby="change_receipt" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="change_receipt">Change & Receipt</h1>
+                                <h1 class="modal-title fs-5" id="change_receipt">Invoice</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
                             </div>
                             <div class="modal-body">
 
                                 <div class="mb-3">
-                                    <div class="d-flex align-items-center justify-content-center flex-column gap-4">
-                                        <div class="d-flex align-items-center justify-content-center gap-2">
-                                            <label class="form-label mb-0 fs-3">Total change:</label>
-                                            <p id="show_change" class="m-0 p-0 fs-3"></p>
+                                    <div class="invoice-frame">
+
+                                        <div class="invoice-header">
+                                            <h3>A.G MAMACLAY POULTRY SHOP</h3>
+                                            <p>+63-961-316-4735</p>
+                                            <p>Website link heree</p>
                                         </div>
-                                        <button type="button" class="btn btn-primary" id="download_receipt_btn">Download Receipt</button>
+
+                                        <div class="invoice-body">
+
+                                            <div class="invoice-product">
+                                                <p class="product-name-invoice">Productaasdasdsadasdsadsa</p>
+                                                <div class="unit-and-quantity-wrap">
+                                                    <p class="quantity-invoice">99</p>
+                                                    <p class="unit-invoice">Piece</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <p class="invoice-price">12000.00</p>
+                                        </div>
+
+                                        <div class="invoice-footer">
+                                            <div class="invoice-total">
+                                                <p>TOTAL: 12332.00</p>
+                                            </div>
+                                            
+                                            <div class="invoice-cash">
+                                                <p>CASH: 15000.00</p>
+                                            </div>
+
+                                            <div class="invoice-change">
+                                                <p>CHANGE: 500.00</p>
+                                            </div>
+
+                                        </div>
+
                                     </div>
+
+                                </div>
+                                
+
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-primary" id="download_receipt_btn">Download Receipt</button>  
                                 </div>
 
                             </div>
@@ -263,11 +298,8 @@ if(!isset($_SESSION['admin_id'])){
 
                 </div>
                 
-
-            </div>
-
-                
-    </div>
+            </div>   
+        </main>
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
