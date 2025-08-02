@@ -252,10 +252,6 @@ function enterCashModal(){
 
 }//enterCashModal() end
 
-const modalReceipt = new bootstrap.Modal(document.getElementById('modal_receipt'));
-modalReceipt.show();
-
-
 //remove an item from the receipt and list of item sales
 document.getElementById('remove_btn').addEventListener('click', function () {
     selectedItem.pop();
