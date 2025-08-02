@@ -121,6 +121,8 @@ function quantityModal(){
 
         const saleItem = {
             sale_product_id: currentProduct.product_id,
+            product_name_invoice: currentProduct.product_name, //For invoice showing only
+            unit_invoice: currentProduct.unit, //For invoice showing only
             product_price: currentProduct.price,
             quantity: quantity_value,
             total_price_per_item: total_price_per_item
@@ -213,7 +215,7 @@ function enterCashModal(){
             setTimeout( () => {
                 
                 if(result.success){
-                
+                showInvoice(amountPaid, totalChange);
                 selectedItem = [];
                 textarea_receipt.value = "";
                 textarea_total.value = "";
@@ -252,6 +254,7 @@ function enterCashModal(){
 
 }//enterCashModal() end
 
+
 //remove an item from the receipt and list of item sales
 document.getElementById('remove_btn').addEventListener('click', function () {
     selectedItem.pop();
@@ -266,7 +269,44 @@ document.getElementById('remove_btn').addEventListener('click', function () {
 
     textarea_total.value = `₱${total.toFixed(2)}`;
 
-}); 
+});
+
+function showInvoice(amountPaid, totalChange){
+
+    const invoiceBodyContainer = document.getElementById("invoice-body-container");
+    const invoiceTotal = document.getElementById("invoice-total");
+    const invoiceCash = document.getElementById("invoice-cash");
+    const invoiceChange = document.getElementById("invoice-change");
+
+    let invoiceRenderer = "";
+
+    selectedItem.forEach((item) => {
+        invoiceRenderer+= `
+            <div class="invoice-body">
+                <div class="invoice-product">
+                    <p class="product-name-invoice">${item.product_name_invoice}</p>
+                    <div class="unit-and-quantity-wrap">
+                        <p class="quantity-invoice">${item.quantity}</p>
+                        <p class="unit-invoice">${item.unit_invoice}</p>
+                    </div>
+                    
+                </div>
+                <p class="invoice-price-per-item">${item.total_price_per_item}</p>
+            </div>
+        
+        `
+    })
+
+    invoiceTotal.textContent = total;
+    invoiceCash.textContent = amountPaid;
+    invoiceChange.textContent = totalChange;
+    
+
+    invoiceBodyContainer.innerHTML = invoiceRenderer;
+
+}
+
+
 
 
 async function showProducts(data) {

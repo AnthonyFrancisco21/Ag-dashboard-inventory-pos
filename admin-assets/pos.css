@@ -268,13 +268,13 @@
 
 /*-------INVOICE STYLE------------*/
 .invoice-frame{
-    border: 1px solid black;
+    padding: .5em;
     
 }
 
 .invoice-header{
-    border: 1px solid red;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
+    border-bottom: 3px dotted black;
 }
 
 .invoice-header p{
@@ -291,15 +291,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid green;
     margin-bottom: .5em;
-    
+
 }
 
 .invoice-product{
     display: flex;
     justify-content: space-between;
-    border: 1px solid red;
     gap: .5em;
     max-width: 230px;
 }
@@ -307,6 +305,7 @@
 .invoice-product p {
     margin: 0;
     font-size: 1rem;
+    font-weight: 300;
 }
 
 .product-name-invoice{
@@ -324,8 +323,28 @@
     white-space: nowrap;
 }
 
-.invoice-price{
+.invoice-price-per-item{
     margin: 0 !important;
+    font-weight: 300;
+}
+
+.invoice-footer{
+    margin-top: 2em;
+}
+
+.invoice-footer-text{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 1em;
+    margin-top: .5em;
+    
+}
+
+.invoice-footer-text p{
+    margin: 0 !important;
+    font-size: 1.2rem;
+    font-weight: 300;
 }
 
 

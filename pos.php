@@ -226,30 +226,39 @@ if(!isset($_SESSION['admin_id'])){
                                             <p>Website link heree</p>
                                         </div>
 
-                                        <div class="invoice-body">
+                                        <div id="invoice-body-container">
 
-                                            <div class="invoice-product">
-                                                <p class="product-name-invoice">Productaasdasdsadasdsadsa</p>
-                                                <div class="unit-and-quantity-wrap">
-                                                    <p class="quantity-invoice">99</p>
-                                                    <p class="unit-invoice">Piece</p>
+                                            <!-- <div class="invoice-body">
+                                                <div class="invoice-product">
+                                                    <p class="product-name-invoice">Productaa</p>
+                                                    <div class="unit-and-quantity-wrap">
+                                                        <p class="quantity-invoice">12</p>
+                                                        <p class="unit-invoice">Pieces</p>
+                                                    </div>
+                                                    
                                                 </div>
-                                                
-                                            </div>
-                                            <p class="invoice-price">12000.00</p>
+                                                <p class="invoice-price-per-item">12000.00</p>
+                                            </div> -->
+
                                         </div>
 
+                                        
+
+
                                         <div class="invoice-footer">
-                                            <div class="invoice-total">
-                                                <p>TOTAL: 12332.00</p>
+                                            <div class="invoice-footer-text invoice-total-wrap">
+                                                <p>TOTAL:</p> 
+                                                <p id="invoice-total">12332.00</p>
                                             </div>
                                             
-                                            <div class="invoice-cash">
-                                                <p>CASH: 15000.00</p>
+                                            <div class="invoice-footer-text invoice-cash-wrap">
+                                                <p>CASH:</p>
+                                                <p id="invoice-cash">15000.00</p>
                                             </div>
 
-                                            <div class="invoice-change">
-                                                <p>CHANGE: 500.00</p>
+                                            <div class="invoice-footer-text invoice-change-wrap">
+                                                <p>CHANGE:</p> 
+                                                <p id="invoice-change">500.00</p>
                                             </div>
 
                                         </div>
