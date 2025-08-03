@@ -218,7 +218,7 @@ if(!isset($_SESSION['admin_id'])){
                             <div class="modal-body">
 
                                 <div class="mb-3">
-                                    <div class="invoice-frame">
+                                    <div class="invoice-frame" id="invoice-print">
 
                                         <div class="invoice-header">
                                             <h3>A.G MAMACLAY POULTRY SHOP</h3>
@@ -227,22 +227,8 @@ if(!isset($_SESSION['admin_id'])){
                                         </div>
 
                                         <div id="invoice-body-container">
-
-                                            <!-- <div class="invoice-body">
-                                                <div class="invoice-product">
-                                                    <p class="product-name-invoice">Productaa</p>
-                                                    <div class="unit-and-quantity-wrap">
-                                                        <p class="quantity-invoice">12</p>
-                                                        <p class="unit-invoice">Pieces</p>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <p class="invoice-price-per-item">12000.00</p>
-                                            </div> -->
-
+                                             
                                         </div>
-
-                                        
 
 
                                         <div class="invoice-footer">
@@ -269,7 +255,7 @@ if(!isset($_SESSION['admin_id'])){
                                 
 
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="download_receipt_btn">Download Receipt</button>  
+                                    <button type="button" class="btn btn-primary" id="download_receipt_btn" onclick="downloadInvoice()">Download Receipt</button>  
                                 </div>
 
                             </div>
@@ -312,7 +298,7 @@ if(!isset($_SESSION['admin_id'])){
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="pos.js"></script>
 
 </body>

@@ -216,9 +216,6 @@ function enterCashModal(){
                 
                 if(result.success){
                 showInvoice(amountPaid, totalChange);
-                selectedItem = [];
-                textarea_receipt.value = "";
-                textarea_total.value = "";
 
                 const modalEl = document.getElementById('enter_amount_modal');
                 const modal = bootstrap.Modal.getInstance(modalEl);
@@ -260,8 +257,8 @@ document.getElementById('remove_btn').addEventListener('click', function () {
     selectedItem.pop();
 
     textarea_receipt.value = selectedItem.map(item =>
-    `• ${item.sale_product_name} - ${item.quantity}x - ₱${item.total_price_per_item.toFixed(2)}`
-    ).join('\n');
+    `• ${item.product_name_invoice} - ${item.quantity}x - ₱${item.total_price_per_item.toFixed(2)}`
+    ).join('\n') + '\n';
 
     total = selectedItem.reduce((sum, item) => {
     return sum + parseFloat(item.total_price_per_item);
@@ -304,6 +301,37 @@ function showInvoice(amountPaid, totalChange){
 
     invoiceBodyContainer.innerHTML = invoiceRenderer;
 
+    setTimeout( () => {
+        downloadInvoice();
+    }, 1000)
+
+    
+
+}
+
+function downloadInvoice() {
+    const invoiceFrame = document.getElementById("invoice-print");
+    const invoiceHeightPx = invoiceFrame.offsetHeight;
+    const invoiceHeightMm = invoiceHeightPx / 3.7795;
+
+    const opt = {
+      margin:       0,
+      filename:     'receipt.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF: {
+        unit: 'mm',
+        format: [80, invoiceHeightMm], // width, height in mm (80mm wide receipt)
+        orientation: 'portrait'
+      }
+    };
+
+    
+    html2pdf().set(opt).from(invoiceFrame).save();
+
+    selectedItem = [];
+    textarea_receipt.value = "";
+    textarea_total.value = "";
 }
 
 
