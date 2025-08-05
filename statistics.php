@@ -109,7 +109,7 @@ if(!isset($_SESSION['admin_id'])){
                     <div class="header-cards">
                         <h3>
                             <span class="currency-icon">₱</span>
-                            <span>10000</span>
+                            <span id="todays-sale"></span>
                         </h3>
                         <p>Today's sales</p>
                     </div>
@@ -118,7 +118,7 @@ if(!isset($_SESSION['admin_id'])){
                             
                             <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="var(--blackText)"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
                            
-                            <span>15</span>
+                            <span id="todays-customers"></span>
                         </h3>
                         <p>Today's customers</p>
                     </div>
@@ -126,7 +126,7 @@ if(!isset($_SESSION['admin_id'])){
                         <h3>
 
                             <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="var(--blackText)"><path d="M600-800H360v280h240v-280Zm200 0H680v280h120v-280ZM575-440H320v240h222q21 0 40.5-7t35.5-21l166-137q-8-8-18-12t-21-6q-17-3-33 1t-30 15l-108 87H400v-80h146l44-36q5-3 7.5-8t2.5-11q0-10-7.5-17.5T575-440Zm-335 0h-80v280h80v-280Zm40 0v-360q0-33 23.5-56.5T360-880h440q33 0 56.5 23.5T880-800v280q0 33-23.5 56.5T800-440H280ZM240-80h-80q-33 0-56.5-23.5T80-160v-280q0-33 23.5-56.5T160-520h415q85 0 164 29t127 98l27 41-223 186q-27 23-60 34.5T542-120H309q-11 18-29 29t-40 11Z"/></svg>
-                            <span>24</span>
+                            <span id="todays-sold-count"></span>
 
                         </h3>
                         <p>Today's sold Items</p>
@@ -134,7 +134,7 @@ if(!isset($_SESSION['admin_id'])){
                     <div class="header-cards">
                         <h3>
                             <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="var(--blackText)"><path d="M200-80q-33 0-56.5-23.5T120-160v-451q-18-11-29-28.5T80-680v-120q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v120q0 23-11 40.5T840-611v451q0 33-23.5 56.5T760-80H200Zm0-520v440h560v-440H200Zm-40-80h640v-120H160v120Zm200 280h240v-80H360v80Zm120 20Z"/></svg>
-                            <span>89</span>
+                            <span id="total-product-count"></span>
                         </h3>
                         <p>Total Products</p>
                     </div>
@@ -144,7 +144,7 @@ if(!isset($_SESSION['admin_id'])){
 
                     <div class="sold-by-categories-wrap">
                         <h3>Sold by Category</h3>
-                        <canvas id="myChart"></canvas>
+                        <canvas id="sold-by-category-graph"></canvas>
                     </div>
 
                     <div class="recent-table-wrap">

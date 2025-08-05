@@ -15,7 +15,7 @@
     } else {
         $sql = "SELECT * FROM product_tbl WHERE categories = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $category);
+        $stmt->bind_param("s", $category);  
     }
 
     $stmt->execute();

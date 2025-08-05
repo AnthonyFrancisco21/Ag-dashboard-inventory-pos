@@ -296,7 +296,7 @@ function showInvoice(amountPaid, totalChange){
 
     invoiceTotal.textContent = total;
     invoiceCash.textContent = amountPaid;
-    invoiceChange.textContent = totalChange;
+    invoiceChange.textContent = parseInt(totalChange);
     
 
     invoiceBodyContainer.innerHTML = invoiceRenderer;
