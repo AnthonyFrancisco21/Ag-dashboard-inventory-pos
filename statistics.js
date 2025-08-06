@@ -1,13 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    scriptLoad();
     loadData();
 })
 
-function scriptLoad(){
-    
-    salesGraph();
-}
 
 async function loadData(){
     const product_data = await getProduct();
@@ -20,6 +15,8 @@ async function loadData(){
     productCard(product_data);
     saleTodayCard(sales, sales_per_product);
     soldByCategoryGraph(product_data, sales_per_product)
+    salesGraph(sales);
+    
 }
 
 
@@ -100,30 +97,23 @@ function saleTodayCard(sales, sales_per_product){
 }
 
 
+let categoryChartInstance = null;
 function soldByCategoryGraph(itemData, productSoldData) {
     
-    /* console.table(itemData);
-    console.table(productSoldData); */
-
-   /*  const productIdFeeds = itemData.filter(item => item.categories === 'feeds').map(item => item.product_id);
-    const productSoldFeeds = productSoldData.filter(item => productIdFeeds.includes(item.product_id));
-
-
-    const feedsQuantity = productSoldFeeds.reduce((sum, item) => {
-        return sum + parseFloat(item.quantity)
-    }, 0)
- */
-
     const feedsQuantity = getTotalQuantity(itemData, productSoldData, 'feeds');
     const supplementsQuantity = getTotalQuantity(itemData, productSoldData, 'Supplements');
     const equipmentsQuantity = getTotalQuantity(itemData, productSoldData, 'Equipment');
     const accessoriesQuantity = getTotalQuantity(itemData, productSoldData, 'Accessories');
     const othersQuantity = getTotalQuantity(itemData, productSoldData, 'others');
 
+    if (categoryChartInstance) {
+        categoryChartInstance.destroy();
+    }
+
 
     const sbcg = document.getElementById('sold-by-category-graph');
 
-    new Chart(sbcg, {
+    categoryChartInstance = new Chart(sbcg, {
         type: 'bar',
         data: {
         labels: ['Feeds', 'Supplements', 'Equipments', 'Accessories', 'Others'],
@@ -144,28 +134,26 @@ function soldByCategoryGraph(itemData, productSoldData) {
 
 }
 
-function getTotalQuantity(itemData, productSoldData, categories){
+let salesChartInstance = null; 
+function salesGraph(sales){
 
-    const productId = itemData.filter(item => item.categories === categories).map(item => item.product_id);
-    const productSold = productSoldData.filter(item => productId.includes(item.product_id));
+    const yearNow = new Date().getFullYear();
+    // --1. Call this function to compute the sale on every month
+    const monthlyTotal = getMonthlySales(sales, yearNow)
+    
 
-    const totalQuantity = productSold.reduce((sum, item) => {
-        return sum + parseFloat(item.quantity)
-    }, 0)
-
-    return totalQuantity;
-}
-
-
-function salesGraph(){
 
     const salesGraph = document.getElementById("sales_graph");
+
+     if (salesChartInstance) {
+        salesChartInstance.destroy(); // Destroy previous chart
+    }
 
     const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [{
         label: 'Sales',
-        data: [0, 0, 0, 0, 0, 0, 0, 1222, 0, 0,0, 0],
+        data: monthlyTotal,
         fill: true,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -185,6 +173,71 @@ function salesGraph(){
     }
     };
 
-    new Chart(salesGraph, config);
+    salesChartInstance = new Chart(salesGraph, config);
 }
   
+
+
+//--2. Pass all the sale data and the year now
+function getMonthlySales(sales, year){
+
+    const monthlyTotalSale = [];
+
+
+    //Loop to create an array for month example 2020-07 - 2020-08 ect..
+    for(i = 1; i <= 12; i++){
+        const month = String(i).padStart(2, '0');
+        const monthKey = `${year}-${month}`
+
+        //--3 Call and pass the sales and monthKey to filter only the data with the match of monthkey(2020-07)
+        const monthSale = getSoldByMonth(sales, monthKey);
+
+
+        //--5. monthSale now contain the date_sold to the monthKey and compute all the total_price
+        const total = monthSale.reduce((sum, item) => {
+            return sum + parseFloat(item.total_price);
+        }, 0); 
+
+        monthlyTotalSale.push(total);
+    }
+    //Push and return the total sale to use on graph
+    return monthlyTotalSale;
+
+
+}
+
+
+function getSoldByMonth(sales, monthKey){
+
+
+    if (!Array.isArray(sales)) {
+        console.error("sales is not an array:", sales);
+        return [];
+    }
+    
+    //--4. Compare the date_sold to monthKey and pass it again to const monthSale
+    const monthAndYear = sales.filter(item => {
+
+        const d = new Date(item.date_sold);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        return `${y}-${m}` === monthKey;
+
+    })
+
+    return monthAndYear;
+  
+}
+
+
+function getTotalQuantity(itemData, productSoldData, categories){
+
+    const productId = itemData.filter(item => item.categories === categories).map(item => item.product_id);
+    const productSold = productSoldData.filter(item => productId.includes(item.product_id));
+
+    const totalQuantity = productSold.reduce((sum, item) => {
+        return sum + parseFloat(item.quantity)
+    }, 0)
+
+    return totalQuantity;
+}
