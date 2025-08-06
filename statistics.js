@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 function scriptLoad(){
-    soldByCategoryGraph();
+    
     salesGraph();
 }
 
@@ -19,6 +19,7 @@ async function loadData(){
 
     productCard(product_data);
     saleTodayCard(sales, sales_per_product);
+    soldByCategoryGraph(product_data, sales_per_product)
 }
 
 
@@ -73,51 +74,62 @@ function saleTodayCard(sales, sales_per_product){
     let todaySales = [];
     let todaysTotalSale = null; 
 
-
-    console.log(typeof dateNow);
-
     sales.forEach(element => {
 
          if(element.date_sold === dateNow){
-            console.log("Today's sale:", element);
+            
             todaySales.push(element)
         } 
 
     });
-
-    console.table(todaySales);
     
     todaysTotalSale = todaySales.reduce((sum, item) => {
         return sum + parseFloat(item.total_price);
     }, 0); 
 
-
+    //Filter the today sale id
     const todaySaleId = sales.filter(item => item.date_sold === dateNow).map(item => item.sale_id);
+    //Compare the today sale id on sold per item to know how many item does customer's bought
     const sold_per_item = sales_per_product.filter(item => todaySaleId.includes(item.sale_id))
 
     showTodaySale.textContent = todaysTotalSale;
     showTodayCustomerCount.textContent = todaySales.length;
     showTodaySaleCount.textContent = sold_per_item.length;
 
-    
-    
-    
-
 
 }
 
 
-function soldByCategoryGraph() {
+function soldByCategoryGraph(itemData, productSoldData) {
     
+    /* console.table(itemData);
+    console.table(productSoldData); */
+
+   /*  const productIdFeeds = itemData.filter(item => item.categories === 'feeds').map(item => item.product_id);
+    const productSoldFeeds = productSoldData.filter(item => productIdFeeds.includes(item.product_id));
+
+
+    const feedsQuantity = productSoldFeeds.reduce((sum, item) => {
+        return sum + parseFloat(item.quantity)
+    }, 0)
+ */
+
+    const feedsQuantity = getTotalQuantity(itemData, productSoldData, 'feeds');
+    const supplementsQuantity = getTotalQuantity(itemData, productSoldData, 'Supplements');
+    const equipmentsQuantity = getTotalQuantity(itemData, productSoldData, 'Equipment');
+    const accessoriesQuantity = getTotalQuantity(itemData, productSoldData, 'Accessories');
+    const othersQuantity = getTotalQuantity(itemData, productSoldData, 'others');
+
+
     const sbcg = document.getElementById('sold-by-category-graph');
 
     new Chart(sbcg, {
         type: 'bar',
         data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green'],
+        labels: ['Feeds', 'Supplements', 'Equipments', 'Accessories', 'Others'],
         datasets: [{
-            label: '# of Votes',
-            data: [12,16,11,67],
+            label: '# of Qauntity',
+            data: [feedsQuantity, supplementsQuantity, equipmentsQuantity, accessoriesQuantity, othersQuantity],
             borderWidth: 1
         }]
         },
@@ -132,6 +144,18 @@ function soldByCategoryGraph() {
 
 }
 
+function getTotalQuantity(itemData, productSoldData, categories){
+
+    const productId = itemData.filter(item => item.categories === categories).map(item => item.product_id);
+    const productSold = productSoldData.filter(item => productId.includes(item.product_id));
+
+    const totalQuantity = productSold.reduce((sum, item) => {
+        return sum + parseFloat(item.quantity)
+    }, 0)
+
+    return totalQuantity;
+}
+
 
 function salesGraph(){
 
@@ -141,7 +165,7 @@ function salesGraph(){
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [{
         label: 'Sales',
-        data: [1200, 5000, 1800, 12223, 16000, 32444, 28999, 1222, 190, 12888,12344, 12239],
+        data: [0, 0, 0, 0, 0, 0, 0, 1222, 0, 0,0, 0],
         fill: true,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',

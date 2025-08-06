@@ -140,30 +140,11 @@ if(!isset($_SESSION['admin_id'])){
                     </div>
                 </div> 
 
-                <div class="barChart-table-wrapper">
-
-                    <div class="sold-by-categories-wrap">
+                <div class="barChart-wrapper">
+                    
                         <h3>Sold by Category</h3>
                         <canvas id="sold-by-category-graph"></canvas>
-                    </div>
-
-                    <div class="recent-table-wrap">
-                        <h3>Today's Recent Sold Item</h3>
-                        <div class=" table-wrap table-responsive">
-                            <table class="table table-hover">
-                                <thead >
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Categories</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                
 
                 </div><!--barChart-table-wrapper end -->
 
