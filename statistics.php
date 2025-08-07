@@ -141,49 +141,48 @@ if(!isset($_SESSION['admin_id'])){
                 </div> 
 
                 <div class="chart-container">
+                    
 
+                    <div class="graph-and-table-wrap">
+                        
                         <div class="barChart-wrapper">
-                    
-                            <h4>Sold by Category</h4>
+                            <h4>Sold Item by Category</h4>
                             <canvas id="sold-by-category-graph"></canvas>
-                    
-
                         </div><!--barChart-wrapper end -->
 
-                    <div class="sales-graph-table-wrapper">
-                        
-                        <div class="sales-graph-wrap">
-
-                            <label>Sales Graph</label>
-                            <canvas id="sales_graph"></canvas>
-
-                        </div>
-
                         <div class="sale-table-wrap">
-                            <label>Today's Recent Sale</label>
-                                <div class="sale-table-wrap">
-                                    <div class=" table-wrap table-responsive">
-                                        <table class="table table-hover">
-                                            <thead class="table-primary">
-                                                <tr>
-                                                    <th>Sale ID</th>
-                                                    <th>Total Amount</th>
-                                                    <th>Total Paid</th>
-                                                    <th>Change</th>
-                                                    <th>Date Sold</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
+                                <h4>Today's Recent Sale</h4>
+                                    <div>
+                                        <div class=" table-wrap table-responsive">
+                                            <table class="table table-hover">
+                                                <thead class="table-primary">
+                                                    <tr>
+                                                        <th>Sale ID</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Total Paid</th>
+                                                        <th>Change</th>
+                                                        <th>Date Sold</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
                         </div>
-                            
-                    </div>  
-                </div>         
+
+                    </div><!-- graph-and-table-wrap-->
+                                  
+                    <div class="sales-graph-wrap">
+
+                        <h4>Sales Graph</h4>
+                        <canvas id="sales_graph"></canvas>
+
+                    </div>            
+
+                </div> <!--chart-container the whole container for graph table and total sale-->
 
 
             </div><!-- main body end -->

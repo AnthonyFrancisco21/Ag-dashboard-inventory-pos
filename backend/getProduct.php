@@ -10,10 +10,10 @@
     }
 
     if ($category === '') {
-        $sql = "SELECT * FROM product_tbl";
+        $sql = "SELECT * FROM product_tbl WHERE is_deleted = 0";
         $stmt = $conn->prepare($sql);
     } else {
-        $sql = "SELECT * FROM product_tbl WHERE categories = ?";
+        $sql = "SELECT * FROM product_tbl WHERE categories = ? AND is_deleted = 0";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $category);  
     }

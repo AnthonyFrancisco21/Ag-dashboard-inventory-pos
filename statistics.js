@@ -6,17 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function loadData(){
     const product_data = await getProduct();
-
     const { sales, sales_per_product } = await getSalesAndSalesByProduct();
-
-    console.log("Sales:", sales);
-    console.log("Sales per Product:", sales_per_product);
 
     productCard(product_data);
     saleTodayCard(sales, sales_per_product);
     soldByCategoryGraph(product_data, sales_per_product)
     salesGraph(sales);
-    
+    invoiceTable(sales);
 }
 
 
@@ -141,8 +137,6 @@ function salesGraph(sales){
     // --1. Call this function to compute the sale on every month
     const monthlyTotal = getMonthlySales(sales, yearNow)
     
-
-
     const salesGraph = document.getElementById("sales_graph");
 
      if (salesChartInstance) {
@@ -208,6 +202,7 @@ function getMonthlySales(sales, year){
 
 
 function getSoldByMonth(sales, monthKey){
+    
 
 
     if (!Array.isArray(sales)) {
@@ -240,4 +235,39 @@ function getTotalQuantity(itemData, productSoldData, categories){
     }, 0)
 
     return totalQuantity;
+}
+
+
+function invoiceTable(sales_data){
+
+    const day = new Date().getDate();
+
+    const salesNow = sales_data.filter(item => {
+        const itemDay = new Date(item.date_sold).getDate();
+        return itemDay === day;
+    });
+
+    const table = document.querySelector('table tbody');
+    let tableRenderer = "";
+
+
+    if(salesNow.length === 0){
+        table.innerHTML = `<tr><td colspan="6" class="text-center">No sales yet...</td></tr>`
+        return;
+    }
+
+    salesNow.forEach((item) => {
+
+        tableRenderer+=`
+            <tr><td>${item.sale_id}</td>
+            <td>${item.total_price}</td>
+            <td>${item.amount_paid}</td>
+            <td>${item.change_due}</td>
+            <td>${item.date_sold}</td></tr>
+        `
+
+    })
+
+    table.innerHTML = tableRenderer;
+
 }
