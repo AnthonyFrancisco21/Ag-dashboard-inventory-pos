@@ -44,8 +44,10 @@ const adminID = document.body.dataset.adminId;
 
 async function loadData(){
     tableData();
-    const data = await getProduct();
+    const data  = await getProduct();
     tableData(data);
+    const deletedData = await getArchiveData();
+    archiveTable(deletedData)
     //functionname(data) to pass the data as argument
 }
 
@@ -53,7 +55,7 @@ function loadscript(){
     categories_dropdown();
     addProduct();
     imagePreview();
-    deleteProduct();
+    archiveProduct();
 }
 
 function resetModal(){
@@ -73,6 +75,20 @@ async function getProduct(category = ''){
     catch (error){
         console.error(error);
         return [];
+    }
+
+}
+
+async function getArchiveData(){
+
+    try{
+        const fetchdata = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getArchiveProduct.php`)
+        const jsondata = await fetchdata.json();
+        return jsondata['deletedData']
+    }
+    catch(err){
+        console.error(err);
+        return[];
     }
 
 }
@@ -176,7 +192,7 @@ function addProduct(){
 } //add product edd
 
 
-function deleteProduct(){
+function archiveProduct(){
 
     const delete_btn = document.querySelectorAll(".delete-btn");
 
@@ -186,14 +202,12 @@ function deleteProduct(){
             const id = this.getAttribute('data-id');
             const isDelete = this.getAttribute('data-isdelete');
 
-            console.log(`Is delete = ${isDelete}`)
-
             const deleteValue = {id, isDelete}
             
             if(confirm("Are you sure you want to delete this product?")){
 
                 try{    
-                const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/deleteProduct.php", {
+                const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -515,6 +529,83 @@ function searchFunction(){
 
 }
 
+function recoverFunction(){
+    const recoverBtn = document.querySelectorAll(".recover_btn");
+
+    recoverBtn.forEach((btn => {
+        btn.addEventListener('click', async function() {
+            const id = this.getAttribute('data-id');
+            const isDelete = this.getAttribute('data-isDeleted')
+
+            const deleteValue = {id, isDelete};
+
+            
+
+            try{
+                const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
+                    method: "POST",
+                    headers:{
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(deleteValue)
+                    });
+
+                const result = await response.json();
+                console.log(result);
+
+                if(result.success){
+                        alert("Product Recovered");
+                        loadData();
+                        return;
+                }else{
+                    alert("Error recovering product")
+                }
+            
+            } catch(error){
+                console.log(error);
+            }
+
+        })
+    }))
+
+    
+}
+
+function archiveTable(deletedData){
+
+    const table = document.querySelector(".archive-tbody");
+
+    console.table(deletedData);
+
+    let archiveRenderer = '';
+
+    if(table.length === 0){
+        table.innerHTML = `<tr><td class='no-data' colspan='6'> No data </td></tr>`;
+    }
+
+    deletedData.forEach((product) => {
+        archiveRenderer+= `
+            <tr>
+                <td>${product.product_id}</td>
+                <td>${product.product_name}</td>
+                <td>${product.categories}</td>
+                <td>${product.price}</td>
+                <td>
+                    <button class="table-btn recover_btn"  data-id="${product.product_id}" data-isdeleted="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#40dc20ff"><path d="m480-240 160-160-56-56-64 64v-168h-80v168l-64-64-56 56 160 160ZM200-640v440h560v-440H200Zm0 520q-33 0-56.5-23.5T120-200v-499q0-14 4.5-27t13.5-24l50-61q11-14 27.5-21.5T250-840h460q18 0 34.5 7.5T772-811l50 61q9 11 13.5 24t4.5 27v499q0 33-23.5 56.5T760-120H200Zm16-600h528l-34-40H250l-34 40Zm264 300Z"/></svg>
+                    </button
+                </td>
+            
+            </tr>
+        `
+    })
+
+    table.innerHTML = archiveRenderer;
+
+    recoverFunction();
+
+}
+
 
 
 async function tableData(data){
@@ -539,7 +630,7 @@ async function tableData(data){
                 <td>${product.price}</td>
                 <td>
                     
-                    <button class="view-btn" data-bs-toggle="modal" data-bs-target="#modalViewProduct" 
+                    <button class="view-btn table-btn" data-bs-toggle="modal" data-bs-target="#modalViewProduct" 
                     data-product_id="${product.product_id}"
                     data-product_name="${product.product_name}"
                     data-product_categories="${product.categories}"
@@ -549,7 +640,7 @@ async function tableData(data){
                     > <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#7CA7D8"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
                     </button>
 
-                    <button class="update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateProduct"
+                    <button class="update-btn table-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateProduct"
                     data-product_id="${product.product_id}"
                     data-product_name="${product.product_name}"
                     data-product_categories="${product.categories}"
@@ -558,7 +649,7 @@ async function tableData(data){
                     data-unit="${product.unit}"
                     > <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#78A75A"><path d="M560-80v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T903-300L683-80H560Zm300-263-37-37 37 37ZM620-140h38l121-122-18-19-19-18-122 121v38ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v120h-80v-80H520v-200H240v640h240v80H240Zm280-400Zm241 199-19-18 37 37-18-19Z"/></svg> </button>
 
-                    <button class="delete-btn" data-id="${product.product_id}" data-isdelete="1">
+                    <button class="delete-btn table-btn" data-id="${product.product_id}" data-isdelete="1">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg> </button>
                 </td>
                 
@@ -569,7 +660,7 @@ async function tableData(data){
         setupTableFilters();
         viewProduct();
         updateProduct();
-        deleteProduct();
+        archiveProduct()
         searchFunction();
     }
 }
