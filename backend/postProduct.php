@@ -1,5 +1,13 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(403); 
+    echo json_encode(["error" => "You don't have permission to access this."]);
+    exit();
+}
+
 include("database.php");
 
 header("Access-Control-Allow-Origin: *");

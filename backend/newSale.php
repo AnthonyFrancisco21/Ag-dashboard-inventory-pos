@@ -1,5 +1,13 @@
 <?php 
 
+    session_start();
+
+    if (!isset($_SESSION['admin_id'])) {
+        http_response_code(403); 
+        echo json_encode(["error" => "You don't have permission to access this."]);
+        exit();
+    }
+
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");

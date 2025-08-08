@@ -168,6 +168,11 @@
     
 }
 
+.item .item_name{
+    font-weight: 700 !important;
+    text-wrap: wrap;
+}
+
 .item-card-wrap{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

@@ -9,6 +9,7 @@ function loadscript() {
     categoryFunction();
     quantityModal();
     enterCashModal();
+    searchCard();
 }
 
 async function loadData(){
@@ -305,9 +306,9 @@ function showInvoice(amountPaid, totalChange){
         downloadInvoice();
     }, 1000)
 
-    
 
 }
+
 
 function downloadInvoice() {
     const invoiceFrame = document.getElementById("invoice-print");
@@ -336,6 +337,45 @@ function downloadInvoice() {
 
 
 
+function searchCard() {
+    const searchBtn = document.getElementById('search-btn');
+
+    searchBtn.addEventListener('click', function () {
+        const searchValue = document.getElementById('search-item').value.toLowerCase();
+        const items = document.querySelectorAll('.item');
+
+        let matchCount = 0;
+
+        items.forEach((item) => {
+            const nameElement = item.querySelector('.item_name');
+            const itemName = nameElement ? nameElement.textContent.toLowerCase() : '';
+
+            if (itemName.includes(searchValue)) {
+                item.style.display = ""; 
+                matchCount++;
+            } else {
+                item.style.display = "none"; 
+            }
+        });
+
+        
+        const noData = document.getElementById("no-card-data");
+        if (matchCount === 0) {
+            if (!noData) {
+                const div = document.createElement("div");
+                div.id = "no-card-data";
+                div.className = "text-muted text-center mt-3";
+                div.textContent = "No matching cards found.";
+                document.querySelector(".item-card-wrap").appendChild(div); 
+            }
+        } else {
+            const existing = document.getElementById("no-card-data");
+            if (existing) existing.remove();
+        }
+    });
+}
+
+
 
 async function showProducts(data) {
     const container = document.querySelector(".item-card-wrap");
@@ -350,7 +390,7 @@ async function showProducts(data) {
 
         itemDiv.innerHTML = `
             <img src=" backend/${product.image_path}" class="item-img" alt="${product.product_name}">
-            <p class="item_description">${product.product_name}</p>
+            <p class="item_name">${product.product_name}</p>
             <p class="item_description">₱${product.price}</p>
         `;
 
