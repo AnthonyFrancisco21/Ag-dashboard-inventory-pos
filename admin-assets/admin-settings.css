@@ -1,0 +1,46 @@
+.main-body{
+    margin-top: 5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    width: 96%;
+    height: 90vh;
+    position: relative;
+    
+}
+.admin-table-container{
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn-wrapper{
+    display: flex;
+    justify-content: end;
+    margin-right: 1em;
+}
+
+
+
+.table-wrap{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    max-height: 600px;
+    overflow-y: auto;
+   
+}
+
+.table{
+    text-align: center;
+    margin: 1em;
+}
+
+
+

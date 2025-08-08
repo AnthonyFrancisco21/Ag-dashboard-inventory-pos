@@ -106,6 +106,77 @@ if(!isset($_SESSION['admin_id'])){
 
             <div class="main-body">
                 
+                <div class="admin-table-container">
+
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-primary admin-btn" data-bs-toggle="modal" data-bs-target="#add_admin">Add New Admin</button>
+
+                            
+                        <!-- Modal for add admin -->
+                        <div class="modal fade" id="add_admin" tabindex="-1" aria-labelledby="add_admin_title" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="admin_title">Add Admin</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="mb-3">
+                                            <label for="admin_fname" class="form-label">First Name</label>
+                                            <input type="text" class="form-control " id="admin_fname"> 
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="admin_lname" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control " id="admin_lname"> 
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="admin_email" class="form-label">Email</label>
+                                            <input type="text" class="form-control " id="admin_email"> 
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="admin_pass" class="form-label">Enter Password</label>
+                                            <input type="text" class="form-control " id="admin_pass"> 
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="re-enter" class="form-label">Re-enter Password</label>
+                                            <input type="text" class="form-control " id="re-enter"> 
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="add_item">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="table-wrap table-responsive">
+                        <table class="table table-hover table-bordered rounded">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="admin-tbody">
+                                
+                                
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 
             </div>   
         </main>
