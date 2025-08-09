@@ -152,6 +152,11 @@ function addProduct(){
 
         const finalPrice = `${whole}.${decimal}`;
 
+        if (!product_name || !selected_category || !image_file || !selected_unit || isNaN(whole)) {
+        alert('Please complete the form');
+        return; 
+        }
+
         const formData = new FormData();
         formData.append("product_name", product_name);
         formData.append("selected_category", selected_category);
@@ -159,6 +164,7 @@ function addProduct(){
         formData.append("selected_unit", selected_unit);
         formData.append("final_price", finalPrice);
         formData.append("admin_id", adminID);
+
 
         try{
             const res = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/postProduct.php", {

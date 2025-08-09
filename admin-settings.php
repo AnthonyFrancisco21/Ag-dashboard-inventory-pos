@@ -121,36 +121,41 @@ if(!isset($_SESSION['admin_id'])){
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <form id="add-admin-form">
+                                            <div class="mb-3 form-group">
+                                                <label for="admin_fname" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="admin_fname" name="First Name">
+                                                <span class="error-message"></span> 
+                                            </div>
 
-                                        <div class="mb-3">
-                                            <label for="admin_fname" class="form-label">First Name</label>
-                                            <input type="text" class="form-control " id="admin_fname"> 
-                                        </div>
+                                            <div class="mb-3 form-group">
+                                                <label for="admin_lname" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="admin_lname" name="Last Name">
+                                                <span class="error-message"></span>  
+                                            </div>
 
-                                        <div class="mb-3">
-                                            <label for="admin_lname" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control " id="admin_lname"> 
-                                        </div>
+                                            <div class="mb-3 form-group">
+                                                <label for="admin_new_email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" autocomplete="new-email" id="admin_email" name="Email"> 
+                                                <span class="error-message"></span> 
+                                            </div>
 
-                                        <div class="mb-3">
-                                            <label for="admin_email" class="form-label">Email</label>
-                                            <input type="text" class="form-control " id="admin_email"> 
-                                        </div>
+                                            <div class="mb-3 form-group">
+                                                <label for="admin_new_pass" class="form-label">Enter Password</label>
+                                                <input type="password" class="form-control " autocomplete="new-password" id="admin_pass" name="Password">
+                                                <span class="error-message"></span>  
+                                            </div>
 
-                                        <div class="mb-3">
-                                            <label for="admin_pass" class="form-label">Enter Password</label>
-                                            <input type="text" class="form-control " id="admin_pass"> 
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="re-enter" class="form-label">Re-enter Password</label>
-                                            <input type="text" class="form-control " id="re-enter"> 
-                                        </div>
-
+                                            <div class="mb-3 form-group">
+                                                <label for="re-enter" class="form-label">Re-enter Password</label>
+                                                <input type="password" class="form-control " id="re-enter" name="Re-enter Password">
+                                                <span class="error-message not-match-error"></span>
+                                            </div>  
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="add_item">Save</button>
+                                        <button type="button" class="btn btn-primary" id="save_admin">Save</button>
                                     </div>
                                 </div>
                             </div>

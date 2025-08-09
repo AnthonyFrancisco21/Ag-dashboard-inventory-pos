@@ -16,20 +16,25 @@
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
 
-        $lname = $data['first_name'];
-        $fname = $data['last_name'];
-        $pass = $data['password'];
+        $admin_fname = $data['fname'];
+        $admin_lname = $data['lname'];
+        $admin_email = $data['adminEmail'];
+        $admin_pass = $data['reEnterValue'];
 
+        $hashedPassword = password_hash($admin_pass, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare('INSERT INTO admin_tbl (fname, lname, admin_pass)');
-        $stmt->bind_param('ssss', $lname, $fname, $pass);
+        $stmt = $conn->prepare('INSERT INTO admin_tbl (fname, lname, admin_email, admin_pass) VALUES (?,?,?,?)');
+        $stmt->bind_param('ssss', $admin_fname, $admin_lname, $admin_email, $hashedPassword);
 
         if($stmt->execute()){
 
-            echo json_encode(['Success' => true, 'Message' => "Successfully added a new admin"]);
+            echo json_encode(['success' => true, 'Message' => "Successfully added a new admin"]);
 
-            $stmt->close();
+            
+        } else{
+            echo json_encode(['success' => false, 'message' => "Failed to add admin"]);
         }
+        $stmt->close();
 
     }else{
         $stmt = $conn->prepare("SELECT admin_id, fname, lname, admin_email  FROM admin_tbl");
@@ -55,7 +60,6 @@
 
     }
 
-    //REPEAT FULL OF ERROR
 
 
 ?>

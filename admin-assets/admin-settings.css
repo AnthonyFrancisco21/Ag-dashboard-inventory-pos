@@ -43,4 +43,14 @@
 }
 
 
+.error{
+    border: 1px solid red;
+}
 
+.error-message,
+.not-match-error{
+    font-size: .8rem;
+    font-weight: 300;
+    color: red;
+    font-style: italic;
+}
