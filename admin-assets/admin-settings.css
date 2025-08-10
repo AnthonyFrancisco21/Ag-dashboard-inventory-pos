@@ -16,6 +16,8 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 2em;
+    gap: 1em;
 }
 
 .btn-wrapper{
@@ -23,7 +25,6 @@
     justify-content: end;
     margin-right: 1em;
 }
-
 
 
 .table-wrap{
@@ -35,6 +36,12 @@
     max-height: 600px;
     overflow-y: auto;
    
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .table{
@@ -53,4 +60,18 @@
     font-weight: 300;
     color: red;
     font-style: italic;
+}
+
+.table-btn{
+    margin-left: .3em;
+    border-radius: 50%;
+    padding: .3em;
+    border: none;
+    background-color: var(--tertiary-color);
+    box-shadow: 0 2px 9px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease-in-out;
+}
+
+.table-btn:hover{
+    transform: scale(1.20);
 }

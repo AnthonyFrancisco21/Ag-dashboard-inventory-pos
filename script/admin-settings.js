@@ -1,5 +1,6 @@
 addEventListener('DOMContentLoaded', function(){
     loadData();
+    loadScript();
 
     const modal = document.getElementById('add_admin');
     if (modal) {
@@ -23,11 +24,14 @@ addEventListener('DOMContentLoaded', function(){
 
 })
 
+function loadScript(){
+    formValidation();
+}
+
 async function loadData(){
 
     const adminData = await getAdminData();
     adminTable(adminData);
-    formValidation();
 
 }
 
@@ -114,7 +118,7 @@ async function saveNewAdmin(newAdminData){
 
         if(result.success){
             alert('Successfully added a new admin')
-            console.log(result)
+            loadData();
             
         }else{
             alert('Error please try again')
@@ -125,6 +129,29 @@ async function saveNewAdmin(newAdminData){
     catch(err){
         console.log(err)
     }
+
+}
+
+async function deleteAdmin(){
+    
+
+    const table = document.querySelector('.admin-tbody');
+
+    table.addEventListener('click', function(e) {
+
+        const updateBtn = e.target.closest('.update-btn')
+        const deleteBtn = e.target.closest('.delete-btn');
+        if (deleteBtn) {
+            const adminId = deleteBtn.getAttribute('data-adminid');
+            console.log(adminId);
+        } else if (updateBtn){
+            const adminId = updateBtn.getAttribute('data-adminid');
+            console.log(`update ${adminId}`);
+        }
+
+
+
+    })
 
 }
 
@@ -143,12 +170,18 @@ function adminTable(adminData){
                 <td>${item.lname}</td>
                 <td>${item.admin_email}</td>
                 <td>
-                    <button>Update</button>
-                    <button>Delete</button>
+                    <button class="update-btn table-btn" data-adminid="${item.admin_id}"
+                    > <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#78A75A"><path d="M560-80v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T903-300L683-80H560Zm300-263-37-37 37 37ZM620-140h38l121-122-18-19-19-18-122 121v38ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v120h-80v-80H520v-200H240v640h240v80H240Zm280-400Zm241 199-19-18 37 37-18-19Z"/></svg> </button>
+                    
+
+                    <button class="delete-btn table-btn" data-adminid="${item.admin_id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg> </button>
+
                 </td>
             </tr>
         `
     })
 
     table.innerHTML = tableRenderer;
+    deleteAdmin();
 }
