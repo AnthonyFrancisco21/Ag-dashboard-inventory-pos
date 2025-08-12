@@ -416,79 +416,75 @@ document.getElementById("btn_updateProd").addEventListener('click', async functi
     
 
     Swal.fire({
-                title: "Update this product?",
-                /* text: "You can delete this again.", */
-                icon: "info",    
-                showCancelButton: true,
-                confirmButtonColor: " #3085d6",
-                cancelButtonColor: " #d33",
-                confirmButtonText: "Yes"
-            }).then(async (alertResult) => {
-                if (alertResult.isConfirmed) {
-                    
+    title: "Update this product?",
+    icon: "info",    
+    showCancelButton: true,
+    confirmButtonColor: " #3085d6",
+    cancelButtonColor: " #d33",
+    confirmButtonText: "Yes"
+}).then(async (alertResult) => {
+    if (alertResult.isConfirmed) {
+        
+        Swal.fire({
+            title: "Updating...",
+            text: "Please wait",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        try{
+            const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateProduct.php", {
+            method: "POST",
+            body: formData
+            });
+
+            const result = await response.json();
+            console.log(result); 
+            
+
+            if(result.success){
+                setTimeout(() => {
+                    Swal.close();
                     Swal.fire({
-                        title: "Updating...",
-                        text: "Please wait",
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Updated Successfully'
                     });
+                    loadData();
+                    resetModal();
+                    //Hide the modal--
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('modalUpdateProduct'));
+                    if (modal) modal.hide()
+                    return;
+                }, 2000)
+                
+                
+            }else{
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Error occur, please try again',
+                    showConfirmButton: false,
+                    timer: 5000
+                });
+            }
+        
+        }catch(err){
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Error occur, please try again or refresh the page',
+                showConfirmButton: false,
+                timer: 5000
+            });
+        }
 
-                    try{
-                        const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateProduct.php", {
-                        method: "POST",
-                        body: formData
-                        });
-
-                        const result = await response.json();
-                        console.log(result); 
-                        
-
-                        if(result.success){
-                            setTimeout(() => {
-                                Swal.close();
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success!',
-                                    text: 'Updated Successfully'
-                                });
-                                loadData();
-                                resetModal();
-                                //Hide the modal--
-                                const modal = bootstrap.Modal.getInstance(document.getElementById('modalUpdateProduct'));
-                                if (modal) modal.hide()
-                                return;
-                            }, 2000)
-                            
-                            
-                        }else{
-                            Swal.close();
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: 'Error occur, please try again',
-                                showConfirmButton: false,
-                                timer: 5000
-                            });
-                        }
-                    
-                    }catch(err){
-                        Swal.close();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Error occur, please try again or refresh the page',
-                            showConfirmButton: false,
-                            timer: 5000
-                        });
-                    }
-
-
-
-
-                }//if alertResult end
-            })//then alert end
+    }//if alertResult end
+})//then alert end
 
 
 })//end updatebtn

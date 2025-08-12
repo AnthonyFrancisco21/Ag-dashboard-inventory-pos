@@ -48,7 +48,7 @@
 
             if($stmt->execute()){
 
-                echo json_encode(['success' => true, 'Message' => "Successfully added a new admin"]);
+                echo json_encode(['success' => true, 'message' => "Successfully added a new admin"]);
 
                 
             } else{
@@ -79,7 +79,7 @@
 
         }
         else{
-            echo json_encode(['Message' => 'Error fetching data']);
+            echo json_encode(['message' => 'Error fetching data']);
         }
 
     }

@@ -385,6 +385,18 @@ async function showProducts(data) {
     const show_unit = document.getElementById("show_unit");
     const show_title = document.getElementById("quantity_modal_title");
 
+    if (!data || data.length === 0) {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("item");
+        itemDiv.innerHTML = `
+            <img src="admin-assets/logo.png" class="item-img" alt="No product available">
+            <p class="item_name">Wow! Such an empty.</p>
+            <p class="item_description">₱0.00</p>
+        `;
+        container.appendChild(itemDiv);
+        return; // so we don't run the forEach on empty array
+    }
+
     //show products in a card
     data.forEach((product) => {
         const itemDiv = document.createElement("div");

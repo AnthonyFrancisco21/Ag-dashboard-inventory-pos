@@ -405,7 +405,7 @@ async function deleteAdmin(adminId){
                     });
 
                     loadData();
-                }, 3000)
+                }, 2000)
                 
             }
             else{
