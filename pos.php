@@ -194,10 +194,7 @@ if(!isset($_SESSION['admin_id'])){
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary" id="save_item_btn">
-                                    <span class="spinner-area" style="display: none; justify-content: center; align-items: center; margin:0; padding: 0;">
-                                        <span class="spinner-border spinner-border-sm me-1"  aria-hidden="true"></span>
-                                        <span role="status">Saving...</span>
-                                    </span>
+                                    
                                     <span class="label-area">Save</span>
                                     
                                 </button>
@@ -299,6 +296,7 @@ if(!isset($_SESSION['admin_id'])){
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script/pos.js"></script>
 
 </body>

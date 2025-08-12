@@ -80,6 +80,13 @@
     overflow-y: auto;
 }
 
+#archive-table{
+    margin-top: 1em;
+    white-space: nowrap;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 .table thead th {
   position: sticky;
   top: 0;

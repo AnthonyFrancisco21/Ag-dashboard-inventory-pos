@@ -152,8 +152,14 @@ function addProduct(){
 
         const finalPrice = `${whole}.${decimal}`;
 
-        if (!product_name || !selected_category || !image_file || !selected_unit || isNaN(whole)) {
-        alert('Please complete the form');
+        if (!product_name || !selected_category || !selected_unit || isNaN(whole)) {
+        Swal.close();
+        Swal.fire({
+            icon: 'info',
+            title: 'Error!',
+            text: 'Please complete the form.',
+            timer: 5000
+        })
         return; 
         }
 
@@ -165,6 +171,15 @@ function addProduct(){
         formData.append("final_price", finalPrice);
         formData.append("admin_id", adminID);
 
+        Swal.fire({
+                title: "Adding...",
+                text: "Please wait",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
 
         try{
             const res = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/postProduct.php", {
@@ -175,20 +190,41 @@ function addProduct(){
             const result = await res.json();
 
             if(result.success){
-                alert("Product added!");
-                loadData();
-                resetModal();
-                //Hide the modal--
-                const modal = bootstrap.Modal.getInstance(document.getElementById('modalAddProduct'));
-                if (modal) modal.hide();
-                return;
+                setTimeout(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('modalAddProduct'));
+                    if (modal) modal.hide();
+                    Swal.close(); 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Product Added Successfully'
+                    });
+                    loadData();
+                    resetModal();
+                    return;
+
+                }, 2000)
+                
             }else{
-                alert("Error please try again!");
-                console.log("Error message: ", result.message);
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Error occurred, please try again.',
+                    showConfirmButton: false,
+                    timer: 5000
+                });
             }
 
         }catch(err){
-            console.error("Upload failed, error in try", err);
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Error occurred, please try again or refresh the page.',
+                showConfirmButton: false,
+                timer: 5000
+            });
             
         }
         
@@ -210,39 +246,71 @@ function archiveProduct(){
 
             const deleteValue = {id, isDelete}
             
-            if(confirm("Are you sure you want to delete this product?")){
-
-                try{    
-                const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(deleteValue)
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",    
+                showCancelButton: true,
+                confirmButtonColor: " #d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then(async (alertResult) => {
+                if (alertResult.isConfirmed) {
+                    
+                    Swal.fire({
+                        title: "Deleting...",
+                        text: "Please wait",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
                     });
-                
-                    const result = await response.json();
-                    console.log(result);
 
-                    if(result.success){
-                        alert("Product deleted");
-                        loadData();
-                        return;
-                    }else{
-                        alert("error delete")
-                    }
+                        try{    
+                            const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(deleteValue)
+                                });
+                            
+                                const result = await response.json();
+                                console.log(result);
+
+                                if(result.success){
+                                    setTimeout(() => {
+                                        Swal.close();
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Success!',
+                                            text: 'Deleted Successfully'
+                                        });
+                                        loadData();
+                                        return;
+                                    }, 2000)
+                                    
+                                }else{
+                                    Swal.close();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error!',
+                                        text: 'Error occur, please try again',
+                                        showConfirmButton: false,
+                                        timer: 5000
+                                    });
+                                }
 
 
-                } catch(err){
-                    console.log(`Error ${err}`);
-                }
+                            } catch(err){
+                                console.log(`Error ${err}`);
+                            }
 
-            }
-            
-        })
-    })
-
-}
+                 }
+            }); //  closes .then
+        }); // closes event listener
+    }); // closes forEach
+} // closes function}
 
 //update products
 let current_product_id = null;
@@ -346,38 +414,82 @@ document.getElementById("btn_updateProd").addEventListener('click', async functi
     formData.append("price", finalPrice);
     formData.append("admin_id", adminID);
     
-    if(confirm("Are you sure you want to update this product?")){
 
-        try{
-        const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateProduct.php", {
-        method: "POST",
-        body: formData
-        });
+    Swal.fire({
+                title: "Update this product?",
+                /* text: "You can delete this again.", */
+                icon: "info",    
+                showCancelButton: true,
+                confirmButtonColor: " #3085d6",
+                cancelButtonColor: " #d33",
+                confirmButtonText: "Yes"
+            }).then(async (alertResult) => {
+                if (alertResult.isConfirmed) {
+                    
+                    Swal.fire({
+                        title: "Updating...",
+                        text: "Please wait",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
 
-        /* const result = await response.json();
-        console.log(result); */
-        const text = await response.text();
-        console.log("RAW RESPONSE:", text);
-        const result = JSON.parse(text);
+                    try{
+                        const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateProduct.php", {
+                        method: "POST",
+                        body: formData
+                        });
 
-        if(result.success){
-            alert("Product updated!");
-            loadData();
-            resetModal();
-            //Hide the modal--
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalUpdateProduct'));
-            if (modal) modal.hide()
-            return;
-        }else{
-            alert("Error please try again!");
-            console.log("Error message: ", result.message);
-        }
-        
-        }catch(err){
-            console.log(`Something went wrong, please try again! ${err}`);
-        }
+                        const result = await response.json();
+                        console.log(result); 
+                        
 
-    }
+                        if(result.success){
+                            setTimeout(() => {
+                                Swal.close();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: 'Updated Successfully'
+                                });
+                                loadData();
+                                resetModal();
+                                //Hide the modal--
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('modalUpdateProduct'));
+                                if (modal) modal.hide()
+                                return;
+                            }, 2000)
+                            
+                            
+                        }else{
+                            Swal.close();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Error occur, please try again',
+                                showConfirmButton: false,
+                                timer: 5000
+                            });
+                        }
+                    
+                    }catch(err){
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Error occur, please try again or refresh the page',
+                            showConfirmButton: false,
+                            timer: 5000
+                        });
+                    }
+
+
+
+
+                }//if alertResult end
+            })//then alert end
+
 
 })//end updatebtn
 
@@ -545,37 +657,72 @@ function recoverFunction(){
 
             const deleteValue = {id, isDelete};
 
-            
-
-            try{
-                const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
-                    method: "POST",
-                    headers:{
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(deleteValue)
+            Swal.fire({
+                title: "Recover this product?",
+                text: "You can delete this again.",
+                icon: "info",    
+                showCancelButton: true,
+                confirmButtonColor: " #3085d6",
+                cancelButtonColor: " #d33",
+                confirmButtonText: "Yes"
+            }).then(async (alertResult) => {
+                if (alertResult.isConfirmed) {
+                    
+                    Swal.fire({
+                        title: "Recovering...",
+                        text: "Please wait",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
                     });
 
-                const result = await response.json();
-                console.log(result);
+                    try{
+                        const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
+                            method: "POST",
+                            headers:{
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(deleteValue)
+                            });
 
-                if(result.success){
-                        alert("Product Recovered");
-                        loadData();
-                        return;
-                }else{
-                    alert("Error recovering product")
+                            const result = await response.json();
+                            console.log(result);
+
+                            if(result.success){
+                                setTimeout(() => {
+                                    Swal.close();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success!',
+                                        text: 'Recovered Successfully'
+                                    });
+                                    loadData();
+                                    return;
+                                }, 2000)
+                                loadData();
+                                return;
+                            }else{
+                                alert("Error recovering product")
+                            }
+                    
+                    } catch(error){
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Error occur, please try again',
+                            showConfirmButton: false,
+                            timer: 5000
+                        });
+                    }
+
+
                 }
-            
-            } catch(error){
-                console.log(error);
-            }
-
-        })
-    }))
-
-    
-}
+            })//alert then. end
+        }) //eventlistener end
+    }))//foreach end
+}//function end
 
 function archiveTable(deletedData){
 

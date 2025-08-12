@@ -365,7 +365,7 @@ if(!isset($_SESSION['admin_id'])){
                     </div>
                     <div class="modal-body">
                         <div >
-                            <div class=" table-wrap table-responsive">
+                            <div class="table-wrap table-responsive" id="archive-table">
                                 <table class="table table-hover">
                                     <thead class="table-primary">
                                         <tr>
@@ -412,9 +412,9 @@ if(!isset($_SESSION['admin_id'])){
             </div>
         </main>
     </div>
-
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script/admin-products.js"></script>
 </body>
 </html>

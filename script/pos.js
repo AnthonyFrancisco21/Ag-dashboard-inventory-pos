@@ -174,9 +174,7 @@ function enterCashModal(){
     document.getElementById("save_item_btn").addEventListener('click', async function() {
 
         const btn = document.getElementById('save_item_btn');
-        const spinner = btn.querySelector('.spinner-area');
-        const label = btn.querySelector('.label-area');
-
+        
         const amountPaid = document.getElementById("enter_cash_form").value;
         const warning = document.getElementById("warning-for-cash");
         
@@ -189,10 +187,6 @@ function enterCashModal(){
             warning.style.display = "none";
         }
 
-        // Show loading state
-        spinner.style.display = 'inline-flex';
-        label.style.display = 'none';
-        btn.disabled = true;
 
         const wholeSale = {
             selectedItem,
@@ -202,6 +196,20 @@ function enterCashModal(){
             adminID
         };
 
+        const modalEl = document.getElementById('enter_amount_modal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        document.getElementById("enter_cash_form").value = "";
+        if (modal) modal.hide();
+
+        Swal.fire({
+                title: "Saving...",
+                text: "Please wait",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        
         try{
             const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/newSale.php", {
                 method: "POST",
@@ -213,36 +221,30 @@ function enterCashModal(){
 
             const result = await response.json();
 
-            setTimeout( () => {
-                
+           
+            setTimeout(() => {
                 if(result.success){
-                showInvoice(amountPaid, totalChange);
+                    showInvoice(amountPaid, totalChange);
+                    swal.close();
 
-                const modalEl = document.getElementById('enter_amount_modal');
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                document.getElementById("enter_cash_form").value = "";
-                if (modal) modal.hide();
+                    const modalReceipt = new bootstrap.Modal(document.getElementById('modal_receipt'));
+                    modalReceipt.show();
 
-                const modalReceipt = new bootstrap.Modal(document.getElementById('modal_receipt'));
-                modalReceipt.show();
+                    showBootstrapAlert(result.message, 'success'); 
 
-                showBootstrapAlert(result.message, 'success');
-                //For spinner
-                spinner.style.display = 'none';
-                label.style.display = 'inline';
-                btn.disabled = false;
-
-                return;
                 }else{
-                    showBootstrapAlert('❌ An error occurred. Please try again', 'danger');
-                    //For spinner
-                    spinner.style.display = 'none';
-                    label.style.display = 'inline';
-                    btn.disabled = false;
+
+                    Swal.close(); 
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Unable to save items.',
+                        showConfirmButton: false,
+                        timer: 5000
+                    });
+                    
                 }
-
-            }, 1000)
-
+            }, 2000)
             
         }
         catch(error){

@@ -161,6 +161,58 @@ if(!isset($_SESSION['admin_id'])){
                             </div>
                         </div>
 
+
+                        <!-- Modal for update admin -->
+                        <div class="modal fade" id="update_ad_modal" tabindex="-1" aria-labelledby="update_ad_modal_title" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="admin_title">Update Admin</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-admin-form">
+                                            <div class="mb-3 update-form-group">
+                                                <label for="update_admin_fname" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="update_admin_fname" name="First Name">
+                                                <span class="error-message"></span> 
+                                            </div>
+
+                                            <div class="mb-3 update-form-group">
+                                                <label for="update_admin_lname" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="update_admin_lname" name="Last Name">
+                                                <span class="error-message"></span>  
+                                            </div>
+
+                                            <div class="mb-3 update-form-group">
+                                                <label for="update_admin_email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" autocomplete="new-email" id="update_admin_email" name="Email"> 
+                                                <span class="error-message"></span> 
+                                            </div>
+
+                                            <div class="mb-3 update-form-group">
+                                                <label for="admin_old_pass" class="form-label">Enter Old Password</label>
+                                                <input type="password" class="form-control " autocomplete="new-password" id="admin_old_pass" name="Password">
+                                                <span class="error-message"></span>  
+                                            </div>
+
+                                            <div class="mb-3 update-form-group">
+                                                <label for="update_admin-new-password" class="form-label">Enter New Password</label>
+                                                <input type="password" class="form-control " id="update_admin-new-password" name="Enter New Password">
+                                                <span class="error-message not-match-error"></span>
+                                            </div>  
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="update_admin">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                     
                     <div class="table-wrap table-responsive">
@@ -189,6 +241,7 @@ if(!isset($_SESSION['admin_id'])){
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script/admin-settings.js"></script>
 
 </body>
