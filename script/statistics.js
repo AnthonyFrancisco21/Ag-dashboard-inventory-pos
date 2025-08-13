@@ -219,7 +219,7 @@ function getSoldByMonth(sales, monthKey){
         return `${y}-${m}` === monthKey;
 
     })
-
+    
     return monthAndYear;
   
 }
