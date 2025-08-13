@@ -284,7 +284,7 @@ function archiveProduct(){
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Success!',
-                                            text: 'Deleted Successfully'
+                                            text: result.message
                                         });
                                         loadData();
                                         return;
@@ -450,7 +450,7 @@ document.getElementById("btn_updateProd").addEventListener('click', async functi
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: 'Updated Successfully'
+                        text: `${result.message}`
                     });
                     loadData();
                     resetModal();
@@ -728,9 +728,11 @@ function archiveTable(deletedData){
 
     let archiveRenderer = '';
 
-    if(table.length === 0){
+      if (deletedData.length === 0) {
         table.innerHTML = `<tr><td class='no-data' colspan='6'> No data </td></tr>`;
+        return;
     }
+
 
     deletedData.forEach((product) => {
         archiveRenderer+= `

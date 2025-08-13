@@ -23,7 +23,7 @@ if(!isset($_SESSION['admin_id'])){
     <link rel="stylesheet" href="admin-assets/admin-settings.css">
 </head>
 
-<body data-admin-id="<?= $_SESSION['admin_id']; ?>">
+<body data-admin-id="<?= $_SESSION['admin_id']; ?>" data-admin-fname = "<?= $_SESSION['admin_fname']?>">
 
     <!-- Alerts -->
     <div id="liveAlertPlaceholder"></div>
@@ -34,7 +34,7 @@ if(!isset($_SESSION['admin_id'])){
             <div class="sidebar-wrapper">
                 <header class="sidebar-header">
                     <img src="admin-assets/logo.png">
-                    <h1>Welcome, Admin!</h1>
+                    <h1>Welcome, <?= htmlspecialchars($_SESSION['admin_fname']); ?></h1>
                 </header>
     
                 <main class="sidebar-main">

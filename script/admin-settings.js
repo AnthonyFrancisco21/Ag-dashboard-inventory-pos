@@ -229,6 +229,8 @@ async function updateAdmin(updateAdminData){
                         //Hide the modal--
                         const modal = bootstrap.Modal.getInstance(document.getElementById('update_ad_modal'));
                         if (modal) modal.hide()
+                        document.getElementById('admin_old_pass').value = '';
+                        document.getElementById('update_admin-new-password').value = '';
 
                     }, 3000)
 

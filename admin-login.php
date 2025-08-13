@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT admin_id, admin_pass FROM admin_tbl WHERE admin_email = ?");
+    $stmt = $conn->prepare("SELECT admin_id, fname ,admin_pass FROM admin_tbl WHERE admin_email = ? AND is_deleted = 0 LIMIT 1");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (password_verify($password, $admin['admin_pass'])) {
             $_SESSION['admin_id'] = $admin['admin_id'];
+            $_SESSION['admin_fname'] = $admin['fname'];
             session_regenerate_id(true);
             header("Location: http://localhost/AG_MAMACLAY_DASHBOARD/pos.php");
             exit();

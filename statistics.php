@@ -23,7 +23,7 @@ if(!isset($_SESSION['admin_id'])){
     <link rel="stylesheet" href="admin-assets/statistics.css">
 </head>
 
-<body data-admin-id="<?= $_SESSION['admin_id']; ?>">
+<body data-admin-id="<?= $_SESSION['admin_id']; ?>" data-admin-fname = "<?= $_SESSION['admin_fname']?>">
 
     <!-- Alerts -->
     <div id="liveAlertPlaceholder"></div>
@@ -34,7 +34,7 @@ if(!isset($_SESSION['admin_id'])){
             <div class="sidebar-wrapper">
                 <header class="sidebar-header">
                     <img src="admin-assets/logo.png">
-                    <h1>Welcome, Admin!</h1>
+                    <h1>Welcome, <?= htmlspecialchars($_SESSION['admin_fname']); ?></h1>
                 </header>
     
                 <main class="sidebar-main">
@@ -192,6 +192,7 @@ if(!isset($_SESSION['admin_id'])){
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script/statistics.js"></script>
     <script src="script/logout.js"></script>
 
