@@ -188,7 +188,8 @@
 }
 
 .item-card-wrap .item{
-    border:1px solid blue;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+    border-radius: 5px;
     max-width: 150px;
     min-width: 50px;
 }
@@ -218,7 +219,7 @@
 
 .receipt-wrap{
     width: 22%;
-    border: 2px solid var(--quinary-color);
+    border: 1px solid var(--quinary-color);
     padding: .5em;
     border-radius: .5em;
     height: 80vh;

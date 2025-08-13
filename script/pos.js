@@ -57,7 +57,7 @@ async function categoryFunction(){
 async function getProduct(category = ''){
 
     try{
-        const fetchdata = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getProduct.php?category=${category}`);
+        const fetchdata = await fetch(`./backend/getProduct.php?category=${category}`);
         const jsondata = await fetchdata.json();
         return jsondata['data'];
     }
@@ -211,7 +211,7 @@ function enterCashModal(){
             });
         
         try{
-            const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/newSale.php", {
+            const response = await fetch("./backend/newSale.php", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json"

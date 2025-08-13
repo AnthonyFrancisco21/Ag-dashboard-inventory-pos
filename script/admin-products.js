@@ -68,7 +68,7 @@ function resetModal(){
 async function getProduct(category = ''){
 
     try{
-        const fetchdata = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getProduct.php?category=${category}`);
+        const fetchdata = await fetch(`./backend/getProduct.php?category=${category}`);
         const jsondata = await fetchdata.json();
         return jsondata['data'];
     }
@@ -82,7 +82,7 @@ async function getProduct(category = ''){
 async function getArchiveData(){
 
     try{
-        const fetchdata = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getArchiveProduct.php`)
+        const fetchdata = await fetch(`./backend/getArchiveProduct.php`)
         const jsondata = await fetchdata.json();
         return jsondata['deletedData']
     }
@@ -182,7 +182,7 @@ function addProduct(){
 
 
         try{
-            const res = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/postProduct.php", {
+            const res = await fetch("./backend/postProduct.php", {
             method: "POST",
             body: formData
             });
@@ -267,7 +267,7 @@ function archiveProduct(){
                     });
 
                         try{    
-                            const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
+                            const response = await fetch("./backend/archiveProduct.php", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json"
@@ -435,7 +435,7 @@ document.getElementById("btn_updateProd").addEventListener('click', async functi
         });
 
         try{
-            const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateProduct.php", {
+            const response = await fetch("./backend/updateProduct.php", {
             method: "POST",
             body: formData
             });
@@ -674,7 +674,7 @@ function recoverFunction(){
                     });
 
                     try{
-                        const response = await fetch("http://localhost/AG_MAMACLAY_DASHBOARD/backend/archiveProduct.php", {
+                        const response = await fetch("./backend/archiveProduct.php", {
                             method: "POST",
                             headers:{
                                 "Content-Type": "application/json"

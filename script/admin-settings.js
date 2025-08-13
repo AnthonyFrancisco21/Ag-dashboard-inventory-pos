@@ -39,7 +39,7 @@ async function loadData(){
 async function getAdminData(){
 
     try{
-        const response = await fetch('http://localhost/AG_MAMACLAY_DASHBOARD/backend/adminApi.php');
+        const response = await fetch('./backend/adminApi.php');
         const jsondata = await response.json();
         return jsondata['admin_data'];
     }catch(err){
@@ -204,7 +204,7 @@ async function updateAdmin(updateAdminData){
             });
 
              try{
-                const response = await fetch('http://localhost/AG_MAMACLAY_DASHBOARD/backend/updateAdmin.php', {
+                const response = await fetch('./backend/updateAdmin.php', {
                     method: 'POST',
                         headers: {
                             "Content-Type": "application/json"
@@ -275,7 +275,7 @@ async function saveNewAdmin(newAdminData){
 
     try{
 
-        const response = await fetch('http://localhost/AG_MAMACLAY_DASHBOARD/backend/adminApi.php', {
+        const response = await fetch('./backend/adminApi.php', {
             method: "POST",
                 headers: {
                 "Content-Type": "application/json"
@@ -386,7 +386,7 @@ async function deleteAdmin(adminId){
           
         try {
             
-            const response = await fetch('http://localhost/AG_MAMACLAY_DASHBOARD/backend/adminApi.php', {
+            const response = await fetch('./backend/adminApi.php', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

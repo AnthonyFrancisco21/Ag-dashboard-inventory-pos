@@ -19,7 +19,7 @@ async function loadData(){
 async function getProduct(category = ''){
 
    try{
-        const fetchdata = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getProduct.php?category=${category}`);
+        const fetchdata = await fetch(`./backend/getProduct.php?category=${category}`);
         const jsondata = await fetchdata.json();
         return jsondata['data'];
        
@@ -32,7 +32,7 @@ async function getProduct(category = ''){
 
 async function getSalesAndSalesByProduct(){
     try{
-        const salesData = await fetch(`http://localhost/AG_MAMACLAY_DASHBOARD/backend/getSale.php`)
+        const salesData = await fetch(`./backend/getSale.php`)
         const jsonData = await salesData.json();
 
         return {
