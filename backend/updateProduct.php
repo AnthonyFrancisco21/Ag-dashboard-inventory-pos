@@ -15,7 +15,6 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
 
-
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     $product_id = (int) $_POST['product_id'];
@@ -27,7 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $admin_id = (int) $_POST['admin_id'];
 
     if (isset($_FILES['new_image']) && $_FILES['new_image']['error'] === 0) {
-        unlink($old_image);
+        // Only unlink if it's not the default image
+        if ($old_image !== "product_images/mamaclay-logo.png" && file_exists($old_image)) {
+            unlink($old_image);
+        }
+
         $image = $_FILES['new_image'];
         $tmpName = $image['tmp_name'];
         $originalName = $image['name'];
@@ -37,44 +40,38 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $uploadPath = $uploadDir . $newName;
 
         if (move_uploaded_file($tmpName, $uploadPath)) {
-
-            
-            $stmt = $conn->prepare("UPDATE product_tbl SET product_name = ?, categories = ?, image_path = ?, unit = ?, price = ?, admin_id = ? WHERE product_id = ? ");
+            $stmt = $conn->prepare("UPDATE product_tbl 
+                SET product_name = ?, categories = ?, image_path = ?, unit = ?, price = ?, admin_id = ? 
+                WHERE product_id = ?");
             $stmt->bind_param("ssssdii", $product_name, $selected_category, $uploadPath, $selected_unit, $final_price, $admin_id, $product_id);
             $stmt->execute();
 
             echo json_encode([
                 "success" => true,
-                "message" => "Product Updated successfully successfully",
+                "message" => "Product updated successfully",
                 "path" => $uploadPath
             ]);
             exit;
-
-
-        }else {
+        } else {
             echo json_encode(["success" => false, "message" => "Failed to move uploaded file"]);
             exit;
         }
-
-
-
-    }else {
-        $stmt = $conn->prepare("UPDATE product_tbl SET product_name = ?, categories = ?, price = ?, unit = ?, admin_id = ? WHERE product_id = ? ");
-        $stmt->bind_param("ssdsii", $product_name, $selected_category, $final_price, $selected_unit, $admin_id, $product_id);
+    } 
+    else {
+        // No image change, just update the other fields
+        $stmt = $conn->prepare("UPDATE product_tbl 
+            SET product_name = ?, categories = ?, unit = ?, price = ?, admin_id = ? 
+            WHERE product_id = ?");
+        $stmt->bind_param("sssddi", $product_name, $selected_category, $selected_unit, $final_price, $admin_id, $product_id);
         $stmt->execute();
 
         echo json_encode([
             "success" => true,
-            "message" => "Product Updated successfully successfully"
+            "message" => "Product updated successfully (no image change)"
         ]);
-        
         exit;
     }
 }
-
-// Fallback only if not POST
-echo json_encode(["success" => false, "message" => "Invalid request"]);
-exit;
 
 
 ?>
