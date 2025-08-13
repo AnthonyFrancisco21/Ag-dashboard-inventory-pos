@@ -162,7 +162,7 @@ if(!isset($_SESSION['admin_id'])){
                                                         <th>Total Amount</th>
                                                         <th>Total Paid</th>
                                                         <th>Change</th>
-                                                        <th>Date Sold</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>

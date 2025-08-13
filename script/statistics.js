@@ -219,7 +219,7 @@ function getSoldByMonth(sales, monthKey){
         return `${y}-${m}` === monthKey;
 
     })
-    
+
     return monthAndYear;
   
 }
@@ -263,7 +263,6 @@ function invoiceTable(sales_data){
             <td>${item.total_price}</td>
             <td>${item.amount_paid}</td>
             <td>${item.change_due}</td>
-            <td>${item.date_sold}</td></tr>
         `
 
     })

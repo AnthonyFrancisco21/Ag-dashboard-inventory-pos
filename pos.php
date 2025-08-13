@@ -222,7 +222,7 @@ if(!isset($_SESSION['admin_id'])){
                                         <div class="invoice-header">
                                             <h3>A.G MAMACLAY POULTRY SHOP</h3>
                                             <p>+63-961-316-4735</p>
-                                            <p>Website link heree</p>
+                                            <p>Thank you for shopping with us!</p>
                                         </div>
 
                                         <div id="invoice-body-container">

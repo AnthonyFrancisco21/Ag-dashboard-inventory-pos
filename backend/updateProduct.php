@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         echo json_encode([
             "success" => true,
-            "message" => "Product updated successfully (no image change)"
+            "message" => "Product updated successfully"
         ]);
         exit;
     }
