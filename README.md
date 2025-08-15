@@ -278,7 +278,7 @@ Built using **HTML, CSS, JavaScript (frontend)** and **PHP, MySQL (backend)**.
 
        ---
 
-**Future Features**
+ ## Future Features
 
  Planned improvements and upcoming functionalities:
  
