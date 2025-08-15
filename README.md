@@ -279,7 +279,7 @@ Built using **HTML, CSS, JavaScript (frontend)** and **PHP, MySQL (backend)**.
        ---
 
 **Future Features**
- - Planned improvements and upcoming functionalities:
+ Planned improvements and upcoming functionalities:
  - Multi-language support (English, Filipino, etc.)
  - Export statistics graph as PDF or Excel
  - Role-based access control
